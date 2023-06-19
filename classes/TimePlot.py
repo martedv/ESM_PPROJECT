@@ -12,9 +12,9 @@ from classes.thesis_colormap import ThesisPlotCols
 
 
 class TimePlot(Plotting):
-    def __init__(self, **kwargs: str):
+    def __init__(self, fig_scale=1.2, **kwargs: str):
         mscale.register_scale(LambertCylindricalLatitudeScale)
-        fig_y = 3.4741 / 1.2
+        fig_y = 3.4741 / fig_scale
         Plotting.__init__(self, fig_y=fig_y, **kwargs)
 
         self.ax = plt.subplot()
@@ -27,9 +27,13 @@ class TimePlot(Plotting):
         y: np.ndarray,
         time: np.ndarray,
         label: str = None,
+        ax=None,
         **kwargs: str | int,
     ) -> None:
-        self.ax.plot(time, y, linewidth=0.55, label=label, **kwargs)
+        if ax is None:
+            self.ax.plot(time, y, linewidth=0.55, label=label, **kwargs)
+        else:
+            ax.plot(time, y, linewidth=0.55, label=label, **kwargs)
 
     def add_legend(self, **kwargs: str) -> None:
         self.ax.legend(frameon=False, **kwargs)

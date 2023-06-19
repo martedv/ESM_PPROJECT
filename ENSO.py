@@ -59,5 +59,5 @@ tp.add_line(
 )
 
 
-tp.ax.set_xlim(1980, 2005)
+tp.ax.set_xlim(1850, 2005)
 tp.ax.set_ylim(-3, 3)

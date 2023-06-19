@@ -18,10 +18,11 @@ class GeoRefPlot(Plotting):
 
     def __init__(
         self,
-        z: np.ndarray,
+        z: np.ndarray | np.ma.MaskedArray,
         lat: np.ndarray,
         lon: np.ndarray,
         levels: int | np.ndarray,
+        add_east: bool = True,
         mode: Literal["Equator", "Full"] = "Full",
         extend: str = "both",
     ) -> None:
@@ -34,14 +35,16 @@ class GeoRefPlot(Plotting):
         Plotting.__init__(self, fig_y=fig_y)
         self.mode = mode
         self.lat, self.lon = lat, lon
+
         self.z = z
         self.levels = levels
         self.extend = extend
 
         self.vmin = self.z.min()
         self.vmax = self.z.max()
-
-        self._add_east_layer()
+        if add_east:
+            self.lon = np.append(self.lon, [360])
+            self._add_east_layer()
 
         self.ax = self.fig.add_subplot(
             2,
@@ -57,9 +60,16 @@ class GeoRefPlot(Plotting):
     def _add_east_layer(self) -> None:
         # matplotlib needs duplicate eastern layers
 
-        self.lon = np.append(self.lon, [360])
+        if isinstance(self.z, np.ma.MaskedArray):
+            mask = np.append(
+                self.z.mask, np.array([self.z.mask[:, -1]]).transpose(), axis=1
+            )
 
-        self.z = np.append(self.z, np.array([self.z[:, -1]]).transpose(), axis=1)
+            self.z = np.append(self.z, np.array([self.z[:, -1]]).transpose(), axis=1)
+
+            self.z = np.ma.masked_array(self.z, mask=mask)
+        else:
+            self.z = np.append(self.z, np.array([self.z[:, -1]]).transpose(), axis=1)
         pass
 
     def _render_original(self) -> None:

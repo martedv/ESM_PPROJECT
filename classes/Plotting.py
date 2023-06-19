@@ -72,12 +72,12 @@ class Plotting:
         if name is not None:
 
             ldir = "/".join(name.split("/")[:-1])
-            if os.path.exists("../Figures/"):
+            if os.path.exists("Figures/"):
 
-                if not os.path.exists("../Figures/" + ldir):
-                    os.makedirs("../Figures/" + ldir)
+                if not os.path.exists("Figures/" + ldir):
+                    os.makedirs("Figures/" + ldir)
                 plt.savefig(
-                    "../Figures/%s.png" % name,
+                    "Figures/%s.png" % name,
                     bbox_inches="tight",
                     dpi=700,
                     pad_inches=0,
@@ -88,9 +88,7 @@ class Plotting:
 
     def set_thesis_cmap(
         self,
-        cmap_s: Literal[
-            "itcz", "itcz_delta", "itcz_hov", "empty", "radiative", "rain"
-        ],
+        cmap_s: Literal["itcz", "itcz_delta", "itcz_hov", "empty", "radiative", "rain"],
     ) -> None:
         if cmap_s == "itcz":
             cmap = cmocean.cm.thermal
@@ -137,9 +135,7 @@ class Plotting:
             format=format,
         )
 
-    def set_boundary_norm(
-        self, boundaries: np.ndarray | list, nlevs: int = 10
-    ) -> None:
+    def set_boundary_norm(self, boundaries: np.ndarray | list, nlevs: int = 10) -> None:
 
         bds = np.append(
             [
