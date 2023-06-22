@@ -59,6 +59,7 @@ gr.show()
 
 gr.add_colorbar()
 gr.cbar.set_label(r"First Empirical Orthogonal Function")
+
 gr.ax.set_ylim(-30, 30)
 gr.ax.set_xlim(-80, 120)
 gr.ax.set_yticks([-30, -15, 0, 15, 30])
@@ -74,7 +75,7 @@ tp.add_line(temp_3_4, time_t, label="Nino3.4", ax=ax2, color="red")
 tp.ax.set_ylim(-3, 3)
 tp.set_yformat("%i")
 tp.ax.set_ylabel(r"Niño3.4 \SI{}{\celsius}")
-ax2.set_ylabel(r"First Principal Component", color="red")
+ax2.set_ylabel(r"- First Principal Component", color="red")
 
 # tp.add_legend()
 tp.add_horizontal(0)
@@ -84,6 +85,7 @@ tp.savefig("EOF_ERA5/PCA_era5")
 
 
 #%%
+
 
 from classes.Plotting import Plotting
 from matplotlib.ticker import FuncFormatter

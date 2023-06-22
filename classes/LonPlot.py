@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import FuncFormatter
 from classes.Plotting import Plotting
+from classes.thesis_colormap import ThesisPlotCols
 
 
 class LonPlot(Plotting):
@@ -14,14 +15,13 @@ class LonPlot(Plotting):
 
         self.ax = plt.subplot()
 
-        self.ax.set_xlim(-180, 180)
         self.ax.xaxis.set_ticks(self.lon_ticks)
         self.ax.spines[["right", "top"]].set_visible(False)
 
         self.ax.set_prop_cycle(color=ThesisPlotCols.optimal_scale())
 
     def add_line(self, y: np.ndarray, lat: np.ndarray, label: str = None) -> None:
-        self.ax.plot(lat - 180, y, linewidth=0.7, label=label)
+        self.ax.plot(lat, y, linewidth=0.7, label=label)
 
     def add_horizontal(self, y: float = 0) -> None:
         self.ax.axhline(
